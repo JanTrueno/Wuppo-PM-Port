@@ -1,0 +1,33 @@
+{
+  "version": 3,
+  "name": "wuppo.zip",
+  "items": [
+    "Wuppo.sh",
+    "wuppo"
+  ],
+  "items_opt": [],
+  "attr": {
+    "title": "Wuppo",
+    "porter": [
+      "Techbane",
+      "JanTrueno"
+    ],
+    "desc": "Play as an exiled 'wum' looking for a new home in this bizarre but charming world, filled with strange creatures, puzzles, monsters and political chaos.",
+    "desc_md": null,
+    "inst": "Install portfiles. Buy Wuppo on Steam. Use the Steam console to run the following command: download_depot 400630 400632 2735234126411514084. This will download the MacosX version of the game. Navigate to the games assets and copy all files inside the \"Resources\" folder to the gamedata folder.",
+    "inst_md": "1. Install portfiles. Buy Wuppo on Steam. \n2. Use the Steam console to run the following command: download_depot 400630 400632 2735234126411514084. \n3. This will download the MacosX version of the game. \n4. Navigate to the games assets and copy all files inside the \"Resources\" folder to the gamedata folder.",
+    "genres": [
+      "adventure"
+    ],
+    "image": null,
+    "rtr": false,
+    "exp": false,
+    "runtime": null,
+    "reqs": [
+      "!lowres"
+    ],
+    "arch": [
+      "aarch64"
+    ]
+  }
+}
