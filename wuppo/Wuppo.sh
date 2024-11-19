@@ -33,8 +33,6 @@ export PATCHER_GAME="Wuppo"
 export PATCHER_TIME="2 to 4 minutes"
 
 # dos2unix in case of manual installations
-dos2unix "$GAMEDIR/tools/gmKtool.py"
-dos2unix "$GAMEDIR/tools/Klib/GMblob.py"
 dos2unix "$GAMEDIR/patch/patchscript"
 
 # Check if patchlog.txt exists to skip patching
