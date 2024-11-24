@@ -22,16 +22,16 @@ chmod 777 "$TOOLDIR/oggenc"
 cd "$GAMEDIR"
 
 # Patch Wuppo
-if [ -f "gamedata/game.ios" ]; then
-    checksum=$(md5sum "gamedata/game.ios" | awk '{print $1}')
+if [ -f "gamedata/data.win" ]; then
+    checksum=$(md5sum "gamedata/data.win" | awk '{print $1}')
     
-    if [ "$checksum" = "58e29ad4b9648d5c5074e69ce42d1feb" ]; then
+    if [ "$checksum" = "bab69cd8c23c9de241e64e37430d9b0b" ]; then
         echo "Detected correct version of Wuppo. Using xdelta to patch the game with the Wuppo patch..."
         sleep 2
-        if tools/xdelta3 -d -s "gamedata/game.ios" -f "./patch/wuppo.xdelta" "gamedata/game.droid"; then
+        if tools/xdelta3 -d -s "gamedata/data.win" -f "./patch/wuppo.xdelta" "gamedata/game.droid"; then
             echo "Wuppo xdelta patch successful."
             sleep 2
-            rm "gamedata/game.ios"
+            rm "gamedata/data.win"
         else
             echo "Wuppo xdelta patch unsuccessful. Continuing process..."
         fi
@@ -39,7 +39,7 @@ if [ -f "gamedata/game.ios" ]; then
         echo "Unknown game version. No patch applied. Continuing process..."
     fi
 else
-    echo "game.ios file not found. Continuing process..."
+    echo "data.win file not found. Continuing process..."
 fi
 
 # Preset config
@@ -55,11 +55,8 @@ fi
 # Check if there are .ogg, .ttf files or specified folders in ./gamedata
 if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ] || \
    [ -n "$(ls ./gamedata/*.ttf 2>/dev/null)" ] || \
-   [ -d "./gamedata/content" ] || \
    [ -d "./gamedata/dialogue" ] || \
-   [ -d "./gamedata/English.lproj" ] || \
-   [ -d "./gamedata/gmlive" ] || \
-   [ -d "./gamedata/savedata" ]; then
+   [ -d "./gamedata/other" ]; then
    
     # Create ./assets directory if it doesn't exist
     mkdir -p ./assets || echo "Failed to create ./assets directory. Continuing process..."
@@ -79,7 +76,7 @@ if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ] || \
     fi
 
     # Move specified folders from ./gamedata to ./assets
-    for folder in content dialogue English.lproj gmlive savedata; do
+    for folder in dialogue other; do
         if [ -d "./gamedata/$folder" ]; then
             if ! mv "./gamedata/$folder" ./assets/; then
                 echo "Failed to move folder $folder. Continuing process..."

@@ -11,7 +11,7 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 | Architectures | 64bit|
 | Aspect ratio | 16:9 or 16:10 |
 | Rumble support | Yes |
-| Tested versions| [Steam (MACOSX)](https://store.steampowered.com/app/400630/Wuppo_Definitive_Edition/)| 
+| Tested versions| [Steam (Windows "Revert")](https://store.steampowered.com/app/400630/Wuppo_Definitive_Edition/)| 
 | Controls | native |
 | Joysticks required | Dual |
 
@@ -19,9 +19,9 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 **Instructions:**
 1. Install portfiles.
 2. Buy Wuppo on Steam. 
-3. Use the Steam console to run the following command: download_depot 400630 400632 2735234126411514084. 
-4. This will download the MacosX version of the game. 
-5. Navigate to the games assets and copy all files inside the "Resources" folder to the gamedata folder.
+3. In your steam library, right click on Wuppo and select "Properties, Betas, Revert". 
+4. This will download the older Windows Definitive version of the game. 
+5. Navigate to the games assets (Right click, Manage, Browse local files) and copy all files to the gamedata folder.
 
 **Controls:**
 | Button | Action |
@@ -54,12 +54,12 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 **Drivers:** 
 - [x] Mali
 - [x] Panfrost
-- [] Adreno **
+- [X] Adreno **
 
 **Resolutions:** 
-- [] 480x320 ***
+- [X] 480x320 ***
 - [x] 640x480
-- [] 720x720*
+- [X] 720x720*
 - [x] Higher resolutions 
 
 ## Notes:
