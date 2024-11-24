@@ -7,6 +7,7 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 **Details:**
 |Detail  | info |
 |--|--|
+| Ready to run | No, purchase required |
 | Engine | Gamemaker Studio 2.2.2.302 |
 | Architectures | 64bit|
 | Aspect ratio | 16:9 or 16:10 |
