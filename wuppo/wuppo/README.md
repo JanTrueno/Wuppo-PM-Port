@@ -15,7 +15,7 @@ You can purchase the game here on [Steam](https://store.steampowered.com/app/400
 | Engine | Gamemaker Studio 2.2.2.302 |
 | Architectures | 64bit|
 | Aspect ratio | 16:9 or 16:10 |
-| Rumble support | Yes |
+| Rumble support | No |
 | Tested versions| [Steam (Windows "Revert")](https://store.steampowered.com/app/400630/Wuppo_Definitive_Edition/)| 
 | Controls | native |
 | Joysticks required | Dual |
