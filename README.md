@@ -18,11 +18,14 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 
 
 **Instructions:**
-1. Install portfiles.
-2. Buy Wuppo on Steam. 
-3. In your steam library, right click on Wuppo and select "Properties, Betas, Revert". 
-4. This will download the older Windows Definitive version of the game. 
-5. Navigate to the games assets (Right click, Manage, Browse local files) and copy all files to the gamedata folder.
+1. Install portfiles. Buy Wuppo on Steam.
+2. Right-click on Wuppo and select **Properties**.
+3. Go to **Betas**, select **Beta Participation**, and choose **Revert** (For MacOS version, make **Revert** thick).
+4. Right-click on Wuppo again, go to **Manage**, and select **Browse Local Files**.
+5. Copy everything except for the **Funpack** and **Soundtrack** folders.
+6. Go to your **ROMs SD card**, locate the `ports/wuppo/assets` folder, and paste the files there.
+
+
 
 **Controls:**
 | Button | Action |
