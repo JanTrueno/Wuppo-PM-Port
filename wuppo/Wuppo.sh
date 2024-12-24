@@ -27,7 +27,6 @@ $ESUDO chmod +x -R $GAMEDIR/*
 # Exports
 export LD_LIBRARY_PATH="$GAMEDIR/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
-
 export PATCHER_FILE="$GAMEDIR/patch/patchscript"
 export PATCHER_GAME="Wuppo" 
 export PATCHER_TIME="2 to 4 minutes"
@@ -40,20 +39,20 @@ if [ ! -f patchlog.txt ]; then
     if [ -f "$controlfolder/utils/patcher.txt" ]; then
         source "$controlfolder/utils/patcher.txt"
     else
-        echo "This port requires the latest version of PortMaster."
+        pm_message "This port requires the latest version of PortMaster."
     fi
 fi
 
 # Display loading splash
 if [ -f "$GAMEDIR/patchlog.txt" ]; then
-    $ESUDO ./tools/splash "gamedata/splash.png" 1 
-    $ESUDO ./tools/splash "gamedata/splash.png" 5000
+    $ESUDO ./tools/splash "cover.png" 1 
+    $ESUDO ./tools/splash "cover.png" 5000
 fi
 
 # Assign configs and load the game
-$GPTOKEYB "gmloader.aarch64" &
-pm_platform_helper "gmloader.aarch64"
-./gmloader.aarch64 -c gmloader.json
+$GPTOKEYB "gmloadernext.aarch64" &
+pm_platform_helper "gmloadernext.aarch64"
+./gmloadernext.aarch64 -c gmloader.json
 
 # Cleanup
 pm_finish

@@ -8,96 +8,79 @@ exec > >(tee -a "$LOGFILE") 2>&1
 echo "GAMEDIR is set to: $GAMEDIR"
 
 # Exports
-export DATADIR="$GAMEDIR/gamedata"
+export DATADIR="$GAMEDIR/assets"
+export DATAFILE="wuppo.port"
 export LD_LIBRARY_PATH="$GAMEDIR/lib:$GAMEDIR/tools/libs:$LD_LIBRARY_PATH"
-export TOOLDIR="$GAMEDIR/tools"
-export TMPDIR="$GAMEDIR/tmp"
 export PATH="$GAMEDIR/tools:$PATH"
 
 # Permissions
 chmod 666 /dev/uinput
-chmod 777 "$TOOLDIR/gmKtool.py"
-chmod 777 "$TOOLDIR/oggenc"
 
 cd "$GAMEDIR"
 
 # Patch Wuppo
-if [ -f "gamedata/data.win" ]; then
-    checksum=$(md5sum "gamedata/data.win" | awk '{print $1}')
+if [ -f "assets/data.win" ]; then
+    checksum=$(md5sum "assets/data.win" | awk '{print $1}')
     
     if [ "$checksum" = "bab69cd8c23c9de241e64e37430d9b0b" ]; then
         echo "Detected correct version of Wuppo. Using xdelta to patch the game with the Wuppo patch..."
         sleep 2
-        if tools/xdelta3 -d -s "gamedata/data.win" -f "./patch/wuppo.xdelta" "gamedata/game.droid"; then
+        if ! tools/xdelta3 -d -s "assets/data.win" -f "./patch/wuppo.xdelta" "assets/game.droid"; then
+            echo "Patching process failed!" # Failure in patching
+            exit 1
+        else
             echo "Wuppo xdelta patch successful."
             sleep 2
-            rm "gamedata/data.win"
-        else
-            echo "Wuppo xdelta patch unsuccessful. Continuing process..."
+            rm "assets/data.win" || { echo "Patching process failed!"; exit 1; }
         fi
     else
-        echo "Unknown game version. No patch applied. Continuing process..."
+        echo "Unknown game version. No patch applied."
+        echo "Patching process failed!" # Failure due to unknown version
+        exit 1
     fi
 else
-    echo "data.win file not found. Continuing process..."
+    echo "data.win file not found."
+    echo "Patching process failed!" # Failure due to missing file
+    exit 1
 fi
 
-# Preset config
-# Moving preset/Wuppo_config.ini to gamedata if it exists
+# Ensure 'saves' directory exists 
+echo "Ensuring saves directory exists and copying content folder..."
+mkdir -p "./saves"  
+
+# Moving preset/Wuppo_config.ini to saves if it exists
 if [ -f "preset/Wuppo_config.ini" ]; then
-    echo "Moving Wuppo_config.ini to gamedata..."
-    if ! mv "preset/Wuppo_config.ini" "./gamedata/"; then
+    echo "Moving Wuppo_config.ini to saves..."
+    if ! mv "preset/Wuppo_config.ini" "./saves/"; then
         echo "Failed to move Wuppo_config.ini. Continuing process..."
     fi
 fi
 
-# Audio and file packing
-# Check if there are .ogg, .ttf files or specified folders in ./gamedata
-if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ] || \
-   [ -n "$(ls ./gamedata/*.ttf 2>/dev/null)" ] || \
-   [ -d "./gamedata/dialogue" ] || \
-   [ -d "./gamedata/other" ]; then
-   
-    # Create ./assets directory if it doesn't exist
-    mkdir -p ./assets || echo "Failed to create ./assets directory. Continuing process..."
-
-    # Move all .ogg files from ./gamedata to ./assets
-    if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ]; then
-        if ! mv ./gamedata/*.ogg ./assets/; then
-            echo "Failed to move .ogg files. Continuing process..."
-        fi
+# Check if 'assets/content' directory exists, and copy it to 'saves' if it does
+if [ -d "assets/content" ]; then
+    echo "Copying content folder from assets to saves..."
+    if ! cp -r "assets/content" "./saves/"; then
+        echo "Failed to copy content to saves."
+        echo "Patching process failed!" # Failure in copying content
+        exit 1
     fi
-
-    # Move all .ttf files from ./gamedata to ./assets
-    if [ -n "$(ls ./gamedata/*.ttf 2>/dev/null)" ]; then
-        if ! mv ./gamedata/*.ttf ./assets/; then
-            echo "Failed to move .ttf files. Continuing process..."
-        fi
-    fi
-
-    # Move specified folders from ./gamedata to ./assets
-    for folder in dialogue other; do
-        if [ -d "./gamedata/$folder" ]; then
-            if ! mv "./gamedata/$folder" ./assets/; then
-                echo "Failed to move folder $folder. Continuing process..."
-            fi
-        fi
-    done
-
-    # Zip the contents of ./assets into ./wuppo.apk
-    if ! zip -r -0 ./wuppo.apk ./assets/; then
-        echo "Failed to zip files into wuppo.apk. Continuing process..."
-    else
-        echo "Successfully created wuppo.apk."
-    fi
-
-    # Remove the ./assets directory after zipping
-    if ! rm -Rf "$GAMEDIR/assets/"; then
-        echo "Failed to remove ./assets directory. Continuing process..."
-    fi
-
-    # Final completion message
-    echo "Patching process complete!"
 else
-    echo "No .ogg, .ttf files or specified folders found in ./gamedata."
+    echo "'assets/content' directory does not exist. Skipping copy."
 fi
+
+# Creating ZIP archive of the assets directory with no compression
+if [ -d "./assets/" ]; then
+    echo "Creating port archive: $DATAFILE. This will take a while."
+    if ! zip -rq -0 "$DATAFILE" "./assets/"; then
+        echo "Patching process failed!" # Failure in creating the ZIP archive
+        exit 1
+    fi
+    # Clean up the assets directory and create saves directory
+    rm -rf ./assets
+else
+    echo "Assets directory does not exist. Skipping archive creation."
+fi
+
+
+# Completion message
+echo "Process completed successfully."
