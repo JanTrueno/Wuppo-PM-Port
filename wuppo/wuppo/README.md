@@ -8,7 +8,7 @@ Thanks to:
 
 You can purchase the game here on [Steam](https://store.steampowered.com/app/400630/Wuppo_Definitive_Edition/)!
 
-## Details:
+## Details
 |Detail  | info |
 |--|--|
 | Ready to run | No, purchase required |
