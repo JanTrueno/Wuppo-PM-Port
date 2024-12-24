@@ -48,12 +48,12 @@ Play as an exiled 'wum' looking for a new home in this bizarre but charming worl
 
 ## Requirements:
 **Custom Firmwares:**
-- X] AmberELEC
-- [] ArkOS
+- [X] AmberELEC
+- [X] ArkOS
 - [x] ROCKNIX
 - [x] MuOS
-- [] Knulli**
-- [] Crossmix **
+- [X] Knulli**
+- [X] Crossmix **
 
 **Drivers:** 
 - [x] Mali
